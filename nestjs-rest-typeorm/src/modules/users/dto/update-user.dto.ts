@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Length, IsOptional } from 'class-validator';
+import { Length, IsOptional, IsEmail } from 'class-validator';
 
 export class UpdateUserDto {
   @ApiProperty({
@@ -8,7 +8,15 @@ export class UpdateUserDto {
   })
   @Length(5, 20)
   @IsOptional()
-  readonly name: string;
+  username: string;
+
+  @ApiProperty({
+    example: "john.doe@gmail.com",
+    description: "Email of the user"
+  })
+  @IsEmail()
+  @IsOptional()
+  email: string;
 
   @ApiProperty({
     required: false,
@@ -17,4 +25,11 @@ export class UpdateUserDto {
   @Length(8, 8)
   @IsOptional()
   readonly referralCode: string;
+
+  @ApiProperty({
+    example: "mockingpwd",
+    description: "Password of the user"
+  })
+  @IsOptional()
+  password: string
 }

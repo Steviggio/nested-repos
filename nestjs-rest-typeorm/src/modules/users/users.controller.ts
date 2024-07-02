@@ -25,7 +25,7 @@ import { AuthService } from 'src/auth/auth.service';
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
   ) { }
 
   @Get()
@@ -42,13 +42,18 @@ export class UsersController {
     return loginResponseDto
   }
 
-  @Get()
+  @Get(":id")
   findOne(@Param("id") id: string) {
     return this.usersService.findOne(id)
   }
 
-  @Delete()
+  @Delete(":id")
   remove(@Param("id") id: string) {
     return this.usersService.deleteOne(id)
+  }
+
+  @Patch(":id")
+  update(@Param("id") id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.findOneAndUpdate(id, updateUserDto)
   }
 }
